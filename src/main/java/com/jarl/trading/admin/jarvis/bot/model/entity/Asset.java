@@ -57,7 +57,6 @@ public class Asset implements Serializable {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "account_id", nullable = false, updatable = false)
-	@Fetch(value = FetchMode.JOIN)
 	private Account account;
 
 }
