@@ -23,7 +23,7 @@ pipelines:
           - gradle
         script:
           - gradle build
-          - git archive --format=tar.gz master -o employee-api-sources.tar.gz
+          - git archive --format=tar.gz master -o jarvis-admin-sources.tar.gz
         artifacts:
           - jarvis-admin-sources.tar.gz
         after-script:
