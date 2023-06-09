@@ -1,5 +1,4 @@
 FROM openjdk:17-oracle
-WORKDIR /app
-ARG JAR_FILE=build/libs/jarvis.bot-0.0.1-SNAPSHOT.jar
-COPY ${JAR_FILE} app.jar
-ENTRYPOINT ["java","-jar","app.jar"]
+COPY --from=jarvis.bot-0.0.1-SNAPSHOT.jar jarvis.bot.app.jar
+EXPOSE 8080
+ENTRYPOINT ["java","-jar","jarvis.bot.app.jar"]
