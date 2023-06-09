@@ -1,6 +1,7 @@
 package com.jarl.trading.admin.jarvis.bot.controller;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.jarl.trading.admin.jarvis.bot.model.dto.AccountDTO;
 import com.jarl.trading.admin.jarvis.bot.service.AccountService;
 
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -38,6 +40,11 @@ public class AccountController {
 	@GetMapping("/id/{id}")
 	public ResponseEntity<AccountDTO> getAccountById(@PathVariable Long id) {
 		log.info("START service getAccount by id: {}", id);
+
+		if (id == null) {
+			throw new IllegalArgumentException("field Id is mandatory");
+		}
+
 		AccountDTO response = service.getById(id);
 		log.info("END service getAccount by id: {}", id);
 		return new ResponseEntity<>(response, HttpStatus.OK);
@@ -46,6 +53,11 @@ public class AccountController {
 	@GetMapping("/login/{login}")
 	public ResponseEntity<AccountDTO> getAccountByLogin(@PathVariable String login) {
 		log.info("START service getAccount by login: {}", login);
+
+		if (login == null) {
+			throw new IllegalArgumentException("field login is mandatory");
+		}
+
 		AccountDTO response = service.getByLogin(login);
 		log.info("END service getAccount by id: {}", login);
 		return new ResponseEntity<>(response, HttpStatus.OK);
@@ -60,9 +72,19 @@ public class AccountController {
 	}
 
 	@PutMapping()
-	public ResponseEntity<AccountDTO> updateAccount(@RequestBody AccountDTO request) {
+	public ResponseEntity<AccountDTO> updateAccount(@RequestBody @Valid AccountDTO request) {
 		log.info("START service to update and existin account: {}", request);
+
+		if (request.getId() == null) {
+			throw new IllegalArgumentException("field Id is mandatory");
+		}
+
 		AccountDTO response = service.update(request);
+
+		if (response == null) {
+			throw new NoSuchElementException("Dont exist account");
+		}
+
 		log.info("END service to update and existin account");
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
@@ -70,6 +92,11 @@ public class AccountController {
 	@DeleteMapping("/id/{id}")
 	public ResponseEntity<AccountDTO> deleteAccount(@PathVariable Long id) {
 		log.info("START service delete existing account: {}", id);
+
+		if (id == null) {
+			throw new IllegalArgumentException("field Id is mandatory");
+		}
+
 		service.delete(id);
 		log.info("END service delete existing account");
 		return new ResponseEntity<>(HttpStatus.OK);
