@@ -1,6 +1,6 @@
 server:
-    port: ${PORT}
-
+    port: 9150
+    
 spring:
   application:
     name: ms-admin-jarvis
