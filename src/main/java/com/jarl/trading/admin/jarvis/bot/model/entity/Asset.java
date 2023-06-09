@@ -2,6 +2,8 @@ package com.jarl.trading.admin.jarvis.bot.model.entity;
 
 import java.io.Serializable;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -38,7 +40,6 @@ public class Asset implements Serializable {
 	@Column(length = 10, nullable = false)
 	private String type;
 	
-	
 	@Column(length = 2, columnDefinition = "integer default 1")
 	private Integer risk;
 	
@@ -55,7 +56,8 @@ public class Asset implements Serializable {
 	private Integer tfConfirmation;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "account_id", nullable = false)
+	@JoinColumn(name = "account_id", nullable = false, updatable = false)
+	@Fetch(value = FetchMode.JOIN)
 	private Account account;
 
 }

@@ -2,8 +2,6 @@ package com.jarl.trading.admin.jarvis.bot.model.dto;
 
 import java.io.Serializable;
 
-import com.jarl.trading.admin.jarvis.bot.model.entity.Account;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -35,6 +33,6 @@ public class AssetDTO implements Serializable {
 
 	private Integer tfConfirmation;
 
-	private Account account;
+	private AccountDTO account;
 
 }

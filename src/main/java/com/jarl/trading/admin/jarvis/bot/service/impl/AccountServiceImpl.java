@@ -56,6 +56,7 @@ public class AccountServiceImpl implements AccountService {
 	@Override
 	public AccountDTO getById(Long id) {
 		log.info("START process to find account by id: {}", id);
+
 		Account account = accountDAO.findById(id).orElse(null);
 
 		log.info("END process to find account by id: {}", id);
@@ -65,6 +66,7 @@ public class AccountServiceImpl implements AccountService {
 	@Override
 	public AccountDTO getByLogin(String login) {
 		log.info("START process to find account by login: {}", login);
+
 		Account account = accountDAO.findByLogin(login);
 
 		log.info("END process to find account by login: {}", login);
@@ -74,25 +76,32 @@ public class AccountServiceImpl implements AccountService {
 
 	@Override
 	public AccountDTO update(AccountDTO request) {
-		log.info("START process to add account with parameters {}", request);
+		log.info("START process to update account with parameters {}", request);
 
-		// Map requestDTO to Entity
-		Account account = DtoToEntity(request);
-		account = accountDAO.save(account);
+		Account bdAccount = accountDAO.findById(request.getId()).orElse(null);
 
-		//TODO Validar si el id que viene existe sino enviar un mensaje de error
-		
-		// Map entity to dto to respond
-		log.info("END process to add account with parameters {}", account);
-		return EntityToDto(account);
+		if (bdAccount != null) {
+			// Map requestDTO to Entity
+			Account account = DtoToEntity(request);
+
+			account = accountDAO.save(account);
+
+			// Map entity to dto to respond
+			log.info("END process to update account with parameters {}", account);
+			return EntityToDto(account);
+		} else {
+			return null;
+		}
+
 	}
 
 	@Override
 	public void delete(Long id) {
 		log.info("START process to delete account by id: {}", id);
+
 		accountDAO.deleteById(id);
 
-		log.info("END process to find account by id: {}", id);
+		log.info("END process to delete account by id: {}", id);
 
 	}
 
