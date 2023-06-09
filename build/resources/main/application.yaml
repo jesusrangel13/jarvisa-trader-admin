@@ -1,0 +1,16 @@
+server:
+    port: 8080
+    
+spring:
+  application:
+    name: ms-admin-jarvis
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    
+  datasource:
+    url: jdbc:mysql://jtb9ia3h1pgevwb1.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/clc5b3qs21ftfq3p
+    username: x95bo9z9ivgqhum6
+    password: aqireab6zh9h7f7u
+    driver-class-name: com.mysql.cj.jdbc.Driver
