@@ -1,0 +1,35 @@
+#  Template Java Gradle build
+
+#  This template allows you to test and build your Java project with Gradle.
+#  The workflow allows running tests, code checkstyle and security scans on the default branch.
+
+# Prerequisites: appropriate project structure should exist in the repository.
+
+image: gradle:6.6.0
+
+pipelines:
+  branches:
+    master:
+    - step:
+        name: Build and Test
+        caches:
+          - gradle
+        script:
+          - gradle build
+          - git archive --format=tar.gz master -o employee-api-sources.tar.gz
+        artifacts:
+          - jarvis-admin-api-sources.tar.gz
+        after-script:
+          - pipe: atlassian/checkstyle-report:0.3.0
+    - step:
+        name: Deploy on Heroku
+        deployment: production
+        script:
+          - pipe: atlassian/heroku-deploy:2.1.0
+            variables:
+              HEROKU_API_KEY: $HEROKU_API_KEY
+              HEROKU_APP_NAME: $HEROKU_APP_NAME
+              ZIP_FILE: 'jarvis-admin-sources.tar.gz'
+              WAIT: 'true'
+              DEBUG: 'true'
+        
