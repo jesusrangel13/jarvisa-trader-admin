@@ -26,4 +26,7 @@ public class AccountDTO implements Serializable {
 
 	private String investorPassword;
 
+	@Nonnull
+	private String server;
+
 }

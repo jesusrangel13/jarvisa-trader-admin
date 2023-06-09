@@ -40,3 +40,6 @@ jar {
       attributes('Main-Class': 'com.jarl.trading.admin.jarvis.bot.JarvisAdminApplication')
    }
 }
+
+
+//jdbc:postgresql://ep-aged-night-929882.us-east-2.aws.neon.tech/neondb?user=jesusrangel13&password=KVR9LQFj7vpm
